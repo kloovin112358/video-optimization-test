@@ -1,0 +1,18 @@
+{
+  "name": "y",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^4.13.2",
+    "bootstrap": "^5.3.3",
+    "masonry-layout": "^4.2.2",
+    "sass": "^1.77.8"
+  }
+}

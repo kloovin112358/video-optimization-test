@@ -1,0 +1,26 @@
+$primary: #cc0041;
+@import "bootstrap/scss/bootstrap";
+
+.navbar {
+    transition: background-color 0.3s ease; /* Smooth transition */
+  }
+
+  .navbar.scrolled {
+    background-color: #cc0041; /* Bootstrap primary color */
+  }
+  .jumbotronSection {
+    padding-top: 10rem;
+    padding-bottom: 10rem;
+  }
+  @media (max-width: 992px) {
+    .jumbotronSection {
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
+  }
+  .radius-50 {
+    border-radius: 50px;
+}
+body {
+    font-family: "Inter", sans-serif;
+  }
