@@ -1,6 +1,6 @@
 # Image Optimization Test
 
-I got sick and tired of my images taking forever to load and performance getting tanked on PageSpeed Insights. This is my attempt at using an image CDN with media queries, srcset, and dynamic compression.
+I got sick and tired of my images taking forever to load and performance getting tanked on PageSpeed Insights. This is my test of usage with an image CDN with media queries, srcset, and dynamic compression.
 
 ![111](https://github.com/user-attachments/assets/99a834e4-b00e-4390-b0ca-7d78deacda78)
 ![222](https://github.com/user-attachments/assets/070a2f8c-320c-4172-81a2-8b1045a6b54b)
