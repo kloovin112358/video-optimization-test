@@ -150,19 +150,22 @@ import GridImage from "../components/GridImage.astro";
         imageNameOnCDN="grid-image-2"
         altText="Cab on cobblestone street"
       />
-      <GridImage imageNameOnCDN="grid-image-3" altText="Big Ben" />
+
       <GridImage imageNameOnCDN="grid-image-4" altText="Modern bridge" />
       <GridImage
         imageNameOnCDN="grid-image-5"
         altText="Tower Bridge and skyline"
       />
-      <GridImage imageNameOnCDN="grid-image-6" altText="Expansive open hall" />
+      <GridImage
+        imageNameOnCDN="grid-image-6"
+        altText="Expansive open hall"
+      /><GridImage imageNameOnCDN="grid-image-3" altText="Big Ben" />
       <GridImage imageNameOnCDN="grid-image-7" altText="Big Ben along water" />
-      <GridImage imageNameOnCDN="grid-image-8" altText="Big Ben at sunrise" />
+
       <GridImage
         imageNameOnCDN="grid-image-9"
         altText="Cab driving below row of flags"
-      />
+      /><GridImage imageNameOnCDN="grid-image-8" altText="Big Ben at sunrise" />
     </div>
   </section>
   <section class="container jumbotronSection">
@@ -189,8 +192,18 @@ import GridImage from "../components/GridImage.astro";
     </p>
   </section>
 </Layout>
-<script>
-  import Masonry from "masonry-layout";
+<script
+  is:inline
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+  crossorigin="anonymous"></script>
+<script
+  is:inline
+  src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+<script
+  is:inline
+  src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
+<script is:inline>
   window.addEventListener("scroll", function () {
     const navbars = document.getElementsByClassName("navbar"); // Get all navbar elements
     for (let i = 0; i < navbars.length; i++) {
@@ -205,12 +218,21 @@ import GridImage from "../components/GridImage.astro";
       }
     }
   });
-
-  document.addEventListener("DOMContentLoaded", function () {
-    var msnry = new Masonry("#photoGrid", {
-      columnWidth: ".masonry-item",
-      itemSelector: ".masonry-item",
-      percentPosition: true,
-    });
+  var $grid = $("#photoGrid").masonry({
+    columnWidth: ".masonry-item",
+    itemSelector: ".masonry-item",
+    percentPosition: true,
   });
+  // layout Masonry after each image loads
+  $grid.imagesLoaded().progress(function () {
+    $grid.masonry("layout");
+  });
+  //   var msnry = new Masonry("#photoGrid", {
+  //     columnWidth: ".masonry-item",
+  //     itemSelector: ".masonry-item",
+  //     percentPosition: true,
+  //   });
+  //   document.addEventListener("DOMContentLoaded", function () {
+
+  //   });
 </script>
