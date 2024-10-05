@@ -1,4 +1,4 @@
-$primary: #cc0041;
+$primary: #00cc66;
 @import "bootstrap/scss/bootstrap";
 
 .navbar {
@@ -6,15 +6,27 @@ $primary: #cc0041;
   }
 
   .navbar.scrolled {
-    background-color: #cc0041; /* Bootstrap primary color */
+    background-color: #00cc66; /* Bootstrap primary color */
   }
   .jumbotronSection {
     padding-top: 10rem;
     padding-bottom: 10rem;
   }
+  .jumbotronSectionTopOnly {
+    padding-bottom: 10rem;
+  }
+  .jumbotronSectionBottomOnly {
+    padding-bottom: 10rem;
+  }
   @media (max-width: 992px) {
     .jumbotronSection {
       padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
+    .jumbotronSectionTopOnly {
+      padding-bottom: 5rem;
+    }
+    .jumbotronSectionBottomOnly {
       padding-bottom: 5rem;
     }
   }

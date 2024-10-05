@@ -1,68 +1,17 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import GridImage from "../components/GridImage.astro";
+import VideoCard from "../components/VideoCard.astro";
 ---
 
 <style>
   .hero-section {
-    background-image: url("https://ik.imagekit.io/oxlcbgl8dg/home-hero.webp/tr:q-50,w-1200,f-auto");
-    background-image: -webkit-image-set(
-      url("https://ik.imagekit.io/oxlcbgl8dg/home-hero.webp/tr:q-50,w-1200,f-auto")
-        1x,
-      url("https://ik.imagekit.io/oxlcbgl8dg/home-hero.webp/tr:q-80,w-1200,f-auto")
-        2x
-    );
-    background-image: image-set(
-      url("https://ik.imagekit.io/oxlcbgl8dg/home-hero.webp/tr:q-50,w-1200,f-auto")
-        1x,
-      url("https://ik.imagekit.io/oxlcbgl8dg/home-hero.webp/tr:q-80,w-1200,f-auto")
-        2x
-    );
-    background-size: cover; /* Ensures the image covers the entire section */
-    background-position: center; /* Centers the image */
-    background-repeat: no-repeat; /* Prevents the image from repeating */
-    min-height: calc(100dvh); /* Use dvh */
-    min-height: calc(100vh); /* Fallback for browsers that do not support dvh */
+    height: 100dvh; /* Use dvh */
+    height: 100vh; /* Fallback for browsers that do not support dvh */
     width: 100%; /* Ensures the section takes the full width */
     overflow: hidden; /* Prevents any overflow */
-  }
-  .masonry-item {
-    width: 50%;
-  }
-
-  @media (min-width: 768px) {
-    .hero-section {
-      background-image: image-set(
-        url("https://ik.imagekit.io/oxlcbgl8dg/home-hero.webp/tr:q-50,w-1200,f-auto")
-          1x,
-        url("https://ik.imagekit.io/oxlcbgl8dg/home-hero.webp/tr:q-80,w-1200,f-auto")
-          2x
-      );
-    }
-    .masonry-item {
-      width: 33.333333333%;
-    }
-  }
-
-  @media (min-width: 1200px) {
-    .hero-section {
-      background-image: image-set(
-        url("https://ik.imagekit.io/oxlcbgl8dg/home-hero.webp/tr:q-50,w-1920,f-auto")
-          1x,
-        url("https://ik.imagekit.io/oxlcbgl8dg/home-hero.webp/tr:q-80,w-1920,f-auto")
-          2x
-      );
-    }
-    .masonry-item {
-      width: 25%;
-    }
-  }
-  .video-section {
     position: relative;
-    height: 100vh; /* Full viewport height */
-    overflow: hidden;
   }
-  /* .overlay-content {
+  .overlay-content {
     position: absolute;
     top: 0;
     left: 0;
@@ -74,53 +23,84 @@ import GridImage from "../components/GridImage.astro";
     z-index: 1;
     color: white;
     background-color: rgba(0, 0, 0, 0.4);
-  } */
+  }
+  @media (max-width: 1199.999px) {
+    .bigOverflowVideoContainer {
+      min-width: 100dvw;
+      min-width: 100vw;
+
+      height: max(100vh, calc(100vw * (16 / 9)));
+      /* width: max(100vw, calc(100vh * (9 / 20))); */
+    }
+  }
+
+  /* For larger screens (desktop) */
   .bigOverflowVideoContainer {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    min-height: 100vh;
+
+    /* Default landscape video settings (16:9 aspect ratio) */
     width: max(100vw, calc(100vh * (16 / 9)));
+
+    /* Full-height view */
+    min-height: 100dvh;
+    min-height: 100vh;
   }
 </style>
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  gsap.registerPlugin(ScrollTrigger);
+  let mm = gsap.matchMedia();
+  mm.add("(min-width: 767.98px)", () => {
+    gsap.utils.toArray<HTMLElement>(".parallaxItem").forEach((layer) => {
+      // Get the speed attribute and convert it to a number
+      const speed = parseFloat(layer.getAttribute("data-speed") || "0");
+
+      // Create the GSAP animation
+      gsap.to(layer, {
+        yPercent: -100 * speed, // Apply the parallax effect based on speed
+        ease: "none",
+        scrollTrigger: {
+          trigger: layer,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1,
+        },
+      });
+    });
+  });
+</script>
 <Layout title="Home">
   <section
     class="hero-section d-flex flex-column justify-content-center text-center"
   >
-    <div class="container">
-      <h1 class="display-1 fw-bold text-center text-white">
-        This is some hero text. We're <span class="text-primary">really</span> excited.
-      </h1>
-      <p class="mt-4 fs-5 text-white">
-        This is some sub-header text with details about that thing.
-      </p>
-      <div>
-        <a class="btn btn-light border-radius-50 px-4 fw-bold" href="/contact"
-          >Contact Us <i class="bi bi-arrow-right" aria-hidden="true"></i></a
-        >
-      </div>
-    </div>
-  </section>
-  <!-- <section class="video-section">
     <div class="bigOverflowVideoContainer">
-      <video preload="none" class="d-block d-md-none" autoplay muted loop>
+      <video
+        preload="none"
+        class="d-block d-md-none"
+        autoplay
+        muted
+        loop
+        style="width:100%;height:100%"
+      >
         <source
-          src="https://ik.imagekit.io/oxlcbgl8dg/london-timelapse.mp4/tr:q-1,w-1200,f-auto"
+          src="https://res.cloudinary.com/dvbmnr7qn/video/upload/f_webm/q_auto:low/c_crop,g_north,h_900,w_506/v1728062767/london-skyline-timelapse_lmlmhe.mp4"
           type="video/webm"
-          style="width:100%;height:100%"
         />
       </video>
       <video
         preload="none"
         class="d-none d-md-block d-xl-none"
-        style="width:100%;height:100%"
         autoplay
         muted
         loop
+        style="width:100%;height:100%"
       >
         <source
-          src="https://ik.imagekit.io/oxlcbgl8dg/london-timelapse.mp4/tr:q-1,w-1200,f-auto"
+          src="https://res.cloudinary.com/dvbmnr7qn/video/upload/f_webm/q_auto:low/c_crop,g_north,h_1200,w_768/v1728062767/london-skyline-timelapse_lmlmhe.mp4"
           type="video/webm"
         />
       </video>
@@ -133,41 +113,29 @@ import GridImage from "../components/GridImage.astro";
         style="width:100%;height:100%"
       >
         <source
-          src="https://ik.imagekit.io/oxlcbgl8dg/london-timelapse.mp4/tr:q-50,w-1920,f-auto"
+          src="https://res.cloudinary.com/dvbmnr7qn/video/upload/f_webm/q_auto:low/c_scale,w_1920/v1728062767/london-skyline-timelapse_lmlmhe.mp4"
           type="video/webm"
         />
       </video>
     </div>
-  </section> -->
-  <section class="pb-5">
-    <h1 class="visually-hidden">Photos of London</h1>
-    <div id="photoGrid">
-      <GridImage
-        imageNameOnCDN="grid-image-1"
-        altText="Millennium bridge at sunset"
-      />
-      <GridImage
-        imageNameOnCDN="grid-image-2"
-        altText="Cab on cobblestone street"
-      />
-
-      <GridImage imageNameOnCDN="grid-image-4" altText="Modern bridge" />
-      <GridImage
-        imageNameOnCDN="grid-image-5"
-        altText="Tower Bridge and skyline"
-      />
-      <GridImage
-        imageNameOnCDN="grid-image-6"
-        altText="Expansive open hall"
-      /><GridImage imageNameOnCDN="grid-image-3" altText="Big Ben" />
-      <GridImage imageNameOnCDN="grid-image-7" altText="Big Ben along water" />
-
-      <GridImage
-        imageNameOnCDN="grid-image-9"
-        altText="Cab driving below row of flags"
-      /><GridImage imageNameOnCDN="grid-image-8" altText="Big Ben at sunrise" />
+    <div class="overlay-content">
+      <div class="container">
+        <h1 class="display-1 fw-bold text-center text-white">
+          This is some hero text. We're <span class="text-primary">really</span>
+          excited.
+        </h1>
+        <p class="mt-4 fs-5 text-white">
+          This is some sub-header text with details about that thing.
+        </p>
+        <div>
+          <a class="btn btn-light border-radius-50 px-4 fw-bold" href="/contact"
+            >Contact Us <i class="bi bi-arrow-right" aria-hidden="true"></i></a
+          >
+        </div>
+      </div>
     </div>
   </section>
+
   <section class="container jumbotronSection">
     <h1 class="display-1 fw-bold">
       This is some <span class="text-primary">really</span> important text
@@ -191,48 +159,70 @@ import GridImage from "../components/GridImage.astro";
       est laborum.
     </p>
   </section>
-</Layout>
-<script
-  is:inline
-  src="https://code.jquery.com/jquery-3.7.1.min.js"
-  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-  crossorigin="anonymous"></script>
-<script
-  is:inline
-  src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-<script
-  is:inline
-  src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
-<script is:inline>
-  window.addEventListener("scroll", function () {
-    const navbars = document.getElementsByClassName("navbar"); // Get all navbar elements
-    for (let i = 0; i < navbars.length; i++) {
-      // Loop through each navbar
-      if (window.scrollY > 56) {
-        // Adjust the value as needed
-        navbars[i].classList.add("scrolled");
-        navbars[i].classList.add("shadow-lg");
-      } else {
-        navbars[i].classList.remove("scrolled");
-        navbars[i].classList.remove("shadow-lg");
+  <section class="jumbotronSectionTopOnly">
+    <div class="container">
+      <div class="row gap-2 gap-md-0 parallaxContainer">
+        <div class="col-md">
+          <VideoCard
+            videoNameOnCDN="grid-video-1_ja8ej4.mp4"
+            altText="Timelapse of London Ferris Wheel"
+            dataSpeed="0.1"
+          />
+        </div>
+        <div class="col-md">
+          <VideoCard
+            videoNameOnCDN="grid-video-2_rpskfq.mp4"
+            altText="Timelapse video of clouds floating over river Thames"
+            dataSpeed="0.3"
+          />
+        </div>
+        <div class="col-md">
+          <VideoCard
+            videoNameOnCDN="grid-video-3_pfjuq1.mp4"
+            altText="Timelapse video of London skyline"
+            data-speed="0.2"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="container jumbotronSectionBottomOnly">
+    <h1 class="display-1 fw-bold">
+      This is some <span class="text-primary">text</span> at the bottom of the page
+    </h1>
+    <p class="fs-5">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+      est laborum.
+    </p>
+    <p class="fs-5">
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+      est laborum.
+    </p>
+  </section>
+  <script>
+    window.addEventListener("scroll", function () {
+      const navbars = document.getElementsByClassName("navbar"); // Get all navbar elements
+      for (let i = 0; i < navbars.length; i++) {
+        // Loop through each navbar
+        if (window.scrollY > 56) {
+          // Adjust the value as needed
+          navbars[i].classList.add("scrolled");
+          navbars[i].classList.add("shadow-lg");
+        } else {
+          navbars[i].classList.remove("scrolled");
+          navbars[i].classList.remove("shadow-lg");
+        }
       }
-    }
-  });
-  var $grid = $("#photoGrid").masonry({
-    columnWidth: ".masonry-item",
-    itemSelector: ".masonry-item",
-    percentPosition: true,
-  });
-  // layout Masonry after each image loads
-  $grid.imagesLoaded().progress(function () {
-    $grid.masonry("layout");
-  });
-  //   var msnry = new Masonry("#photoGrid", {
-  //     columnWidth: ".masonry-item",
-  //     itemSelector: ".masonry-item",
-  //     percentPosition: true,
-  //   });
-  //   document.addEventListener("DOMContentLoaded", function () {
-
-  //   });
-</script>
+    });
+  </script>
+</Layout>
