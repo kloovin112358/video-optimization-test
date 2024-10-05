@@ -1,8 +1,8 @@
 # Image Optimization Test
 
-I got sick and tired of my images taking forever to load and performance getting tanked on PageSpeed Insights. This is my test of usage with an image CDN with media queries, srcset, and dynamic compression.
+I wanted to figure out how to load videos like the big kids in town--without squeezing 20 MB video files through a budget hosting service's free tier, and without hacking together some weird YouTube iframe situation. This test utilizes cloudinary.
 
-![111](https://github.com/user-attachments/assets/99a834e4-b00e-4390-b0ca-7d78deacda78)
-![222](https://github.com/user-attachments/assets/070a2f8c-320c-4172-81a2-8b1045a6b54b)
-![333](https://github.com/user-attachments/assets/b1349189-58a6-400b-a84b-7b6ac6816b93)
-![444](https://github.com/user-attachments/assets/b73a30da-076a-4364-9940-96fa6d198cae)
+![11](https://github.com/user-attachments/assets/b72b9ddd-2e73-465b-82cf-7d71c7d3656c)
+![22](https://github.com/user-attachments/assets/884f68c4-f46d-4b1c-b361-2e8fa4cd2436)
+![33](https://github.com/user-attachments/assets/c0abe7fe-a447-414c-a98f-cf98143fed8f)
+![533](https://github.com/user-attachments/assets/ba9e738d-6ccf-4254-a305-252fb0263533)
