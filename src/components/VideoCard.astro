@@ -31,9 +31,13 @@ const { videoNameOnCDN, altText, dataSpeed } = Astro.props;
       type="video/webm"
     />
   </video>
-
-  <!-- Screen reader only text for description -->
-  <span class="visually-hidden">
-    {altText}
-  </span>
+  <source
+    src={`https://res.cloudinary.com/dvbmnr7qn/video/upload/f_mp4/q_auto:good/c_crop,h_600,w_516/v1728062767/${videoNameOnCDN}`}
+    type="video/mp4"
+  />
 </div>
+
+<!-- Screen reader only text for description -->
+<span class="visually-hidden">
+  {altText}
+</span>
