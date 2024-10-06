@@ -1,6 +1,16 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import VideoCard from "../components/VideoCard.astro";
+import { getCldVideoUrl, getCldImageUrl } from "astro-cloudinary/helpers";
+const smallVideoPoster = getCldImageUrl({
+  src: `https://res.cloudinary.com/dvbmnr7qn/image/upload/q_auto:low/v1728225952/hero-small_pmki8q.jpg`,
+});
+const mediumVideoPoster = getCldImageUrl({
+  src: `https://res.cloudinary.com/dvbmnr7qn/image/upload/q_auto:low/v1728225952/hero-medium_zjcpih.jpg`,
+});
+const largeVideoPoster = getCldImageUrl({
+  src: `https://res.cloudinary.com/dvbmnr7qn/image/upload/q_auto:low/v1728225952/hero-large_fovuxd.jpg`,
+});
 ---
 
 <style>
@@ -87,14 +97,11 @@ import VideoCard from "../components/VideoCard.astro";
         muted
         loop
         style="width:100%;height:100%"
+        poster={smallVideoPoster}
       >
         <source
           src="https://res.cloudinary.com/dvbmnr7qn/video/upload/f_webm/q_auto:low/c_crop,g_north,h_900,w_506/v1728062767/london-skyline-timelapse_lmlmhe.mp4"
           type="video/webm"
-        />
-        <source
-          src="https://res.cloudinary.com/dvbmnr7qn/video/upload/f_mp4/q_auto:low/c_crop,g_north,h_900,w_506/v1728062767/london-skyline-timelapse_lmlmhe.mp4"
-          type="video/mp4"
         />
       </video>
       <video
@@ -104,14 +111,11 @@ import VideoCard from "../components/VideoCard.astro";
         muted
         loop
         style="width:100%;height:100%"
+        poster={mediumVideoPoster}
       >
         <source
           src="https://res.cloudinary.com/dvbmnr7qn/video/upload/f_webm/q_auto:low/c_crop,g_north,h_1200,w_768/v1728062767/london-skyline-timelapse_lmlmhe.mp4"
           type="video/webm"
-        />
-        <source
-          src="https://res.cloudinary.com/dvbmnr7qn/video/upload/f_mp4/q_auto:low/c_crop,g_north,h_1200,w_768/v1728062767/london-skyline-timelapse_lmlmhe.mp4"
-          type="video/mp4"
         />
       </video>
       <video
@@ -121,14 +125,11 @@ import VideoCard from "../components/VideoCard.astro";
         muted
         loop
         style="width:100%;height:100%"
+        poster={largeVideoPoster}
       >
         <source
           src="https://res.cloudinary.com/dvbmnr7qn/video/upload/f_webm/q_auto:low/c_scale,w_1920/v1728062767/london-skyline-timelapse_lmlmhe.mp4"
           type="video/webm"
-        />
-        <source
-          src="https://res.cloudinary.com/dvbmnr7qn/video/upload/f_mp4/q_auto:low/c_scale,w_1920/v1728062767/london-skyline-timelapse_lmlmhe.mp4"
-          type="video/mp4"
         />
       </video>
     </div>
@@ -178,6 +179,7 @@ import VideoCard from "../components/VideoCard.astro";
         <div class="col-md">
           <VideoCard
             videoNameOnCDN="grid-video-1_ja8ej4.mp4"
+            videoPosterNameOnCDN="grid-video-1-thumbnail_n3vfvq.png"
             altText="Timelapse of London Ferris Wheel"
             dataSpeed="0.1"
           />
@@ -185,6 +187,7 @@ import VideoCard from "../components/VideoCard.astro";
         <div class="col-md">
           <VideoCard
             videoNameOnCDN="grid-video-2_rpskfq.mp4"
+            videoPosterNameOnCDN="grid-video-2-thumbnail_wk3xwz.png"
             altText="Timelapse video of clouds floating over river Thames"
             dataSpeed="0.3"
           />
@@ -192,6 +195,7 @@ import VideoCard from "../components/VideoCard.astro";
         <div class="col-md">
           <VideoCard
             videoNameOnCDN="grid-video-3_pfjuq1.mp4"
+            videoPosterNameOnCDN="grid-video-3-thumbnail_ibktrb.png"
             altText="Timelapse video of London skyline"
             data-speed="0.2"
           />
@@ -223,17 +227,49 @@ import VideoCard from "../components/VideoCard.astro";
     </p>
   </section>
   <script>
-    window.addEventListener("scroll", function () {
+    let isScrolledBelowNavbar = false;
+    let isNavbarBGColorShown = false;
+    let isToggleNavbarBGActive = false;
+
+    function toggleNavbarClasses() {
       const navbars = document.getElementsByClassName("navbar"); // Get all navbar elements
       for (let i = 0; i < navbars.length; i++) {
         // Loop through each navbar
         if (window.scrollY > 56) {
-          // Adjust the value as needed
+          // If scrolled down
+          isScrolledBelowNavbar = true;
           navbars[i].classList.add("scrolled");
           navbars[i].classList.add("shadow-lg");
+          isNavbarBGColorShown = true;
         } else {
-          navbars[i].classList.remove("scrolled");
-          navbars[i].classList.remove("shadow-lg");
+          // If not scrolled down
+          isScrolledBelowNavbar = false;
+          if (!isToggleNavbarBGActive) {
+            navbars[i].classList.remove("scrolled");
+            navbars[i].classList.remove("shadow-lg");
+            isNavbarBGColorShown = false;
+          }
+        }
+      }
+    }
+
+    window.addEventListener("scroll", toggleNavbarClasses);
+
+    const navbarToggler = document.getElementById("mobile-navbar-toggler");
+    navbarToggler.addEventListener("click", function () {
+      // Check if scrolled down
+      if (isScrolledBelowNavbar == false) {
+        const navbar = document.getElementById("mobileNavbar"); // Get all navbar elements
+        if (!isScrolledBelowNavbar && !isNavbarBGColorShown) {
+          navbar.classList.add("scrolled");
+          navbar.classList.add("shadow-lg");
+          isNavbarBGColorShown = true;
+          isToggleNavbarBGActive = true;
+        } else {
+          navbar.classList.remove("scrolled");
+          navbar.classList.remove("shadow-lg");
+          isNavbarBGColorShown = false;
+          isToggleNavbarBGActive = false;
         }
       }
     });

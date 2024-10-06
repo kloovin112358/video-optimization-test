@@ -1,14 +1,12 @@
 ---
-const { videoNameOnCDN, altText, dataSpeed } = Astro.props;
+const { videoNameOnCDN, videoPosterNameOnCDN, altText, dataSpeed } =
+  Astro.props;
 import { getCldVideoUrl, getCldImageUrl } from "astro-cloudinary/helpers";
 const webmURL = getCldVideoUrl({
   src: `https://res.cloudinary.com/dvbmnr7qn/video/upload/f_webm/q_auto:good/c_crop,h_600,w_516/v1728062767/${videoNameOnCDN}`,
 });
-// const mp4URL = getCldVideoUrl({
-//   src: `https://res.cloudinary.com/dvbmnr7qn/video/upload/f_mp4/q_auto:good/c_crop,h_600,w_516/v1728062767/${videoNameOnCDN}`,
-// });
 const videoPosterURL = getCldImageUrl({
-  src: "https://res.cloudinary.com/dvbmnr7qn/image/upload/q_auto:low/v1728225952/grid-video-1-thumbnail_n3vfvq.png",
+  src: `https://res.cloudinary.com/dvbmnr7qn/image/upload/q_auto:low/v1728225952/${videoPosterNameOnCDN}`,
 });
 ---
 
