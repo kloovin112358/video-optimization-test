@@ -5,10 +5,10 @@ import VideoCard from "../components/VideoCard.astro";
 
 <style>
   .hero-section {
-    height: 100dvh; /* Use dvh */
-    height: 100vh; /* Fallback for browsers that do not support dvh */
-    width: 100%; /* Ensures the section takes the full width */
-    overflow: hidden; /* Prevents any overflow */
+    width: 100%;
+    height: 100dvh;
+    height: 100vh;
+    overflow: hidden;
     position: relative;
   }
   .overlay-content {
@@ -29,8 +29,8 @@ import VideoCard from "../components/VideoCard.astro";
       min-width: 100dvw;
       min-width: 100vw;
 
+      height: max(100dvh, calc(100dvw * (16 / 9)));
       height: max(100vh, calc(100vw * (16 / 9)));
-      /* width: max(100vw, calc(100vh * (9 / 20))); */
     }
   }
 
@@ -42,6 +42,7 @@ import VideoCard from "../components/VideoCard.astro";
     transform: translate(-50%, -50%);
 
     /* Default landscape video settings (16:9 aspect ratio) */
+    width: max(100dvw, calc(100dvh * (16 / 9)));
     width: max(100vw, calc(100vh * (16 / 9)));
 
     /* Full-height view */
@@ -52,6 +53,7 @@ import VideoCard from "../components/VideoCard.astro";
 <script>
   import { gsap } from "gsap";
   import { ScrollTrigger } from "gsap/ScrollTrigger";
+
   gsap.registerPlugin(ScrollTrigger);
   let mm = gsap.matchMedia();
   mm.add("(min-width: 767.98px)", () => {
@@ -147,7 +149,6 @@ import VideoCard from "../components/VideoCard.astro";
       </div>
     </div>
   </section>
-
   <section class="container jumbotronSection">
     <h1 class="display-1 fw-bold">
       This is some <span class="text-primary">really</span> important text

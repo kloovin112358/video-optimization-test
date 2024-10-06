@@ -1,5 +1,12 @@
 ---
 const { videoNameOnCDN, altText, dataSpeed } = Astro.props;
+import { getCldVideoUrl } from "astro-cloudinary/helpers";
+const webmURL = getCldVideoUrl({
+  src: `https://res.cloudinary.com/dvbmnr7qn/video/upload/f_webm/q_auto:good/c_crop,h_600,w_516/v1728062767/${videoNameOnCDN}`,
+});
+const mp4URL = getCldVideoUrl({
+  src: `https://res.cloudinary.com/dvbmnr7qn/video/upload/f_mp4/q_auto:good/c_crop,h_600,w_516/v1728062767/${videoNameOnCDN}`,
+});
 ---
 
 <style>
@@ -26,15 +33,9 @@ const { videoNameOnCDN, altText, dataSpeed } = Astro.props;
     style="width:100%;height:100%"
     aria-hidden="true"
   >
-    <source
-      src={`https://res.cloudinary.com/dvbmnr7qn/video/upload/f_webm/q_auto:good/c_crop,h_600,w_516/v1728062767/${videoNameOnCDN}`}
-      type="video/webm"
-    />
+    <source src={webmURL} type="video/webm" />
   </video>
-  <source
-    src={`https://res.cloudinary.com/dvbmnr7qn/video/upload/f_mp4/q_auto:good/c_crop,h_600,w_516/v1728062767/${videoNameOnCDN}`}
-    type="video/mp4"
-  />
+  <source src={mp4URL} type="video/mp4" />
 </div>
 
 <!-- Screen reader only text for description -->
