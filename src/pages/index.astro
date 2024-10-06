@@ -1,15 +1,15 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import VideoCard from "../components/VideoCard.astro";
-import { getCldVideoUrl, getCldImageUrl } from "astro-cloudinary/helpers";
+import { getCldImageUrl } from "astro-cloudinary/helpers";
 const smallVideoPoster = getCldImageUrl({
-  src: `https://res.cloudinary.com/dvbmnr7qn/image/upload/q_auto:low/v1728225952/hero-small_pmki8q.jpg`,
+  src: `https://res.cloudinary.com/dvbmnr7qn/image/upload/q_auto:low/v1728232504/new-small-hero-poster_azy9dd.jpg`,
 });
 const mediumVideoPoster = getCldImageUrl({
-  src: `https://res.cloudinary.com/dvbmnr7qn/image/upload/q_auto:low/v1728225952/hero-medium_zjcpih.jpg`,
+  src: `https://res.cloudinary.com/dvbmnr7qn/image/upload/q_auto:low/v1728232504/new-medium-hero-poster_kdtham.jpg`,
 });
 const largeVideoPoster = getCldImageUrl({
-  src: `https://res.cloudinary.com/dvbmnr7qn/image/upload/q_auto:low/v1728225952/hero-large_fovuxd.jpg`,
+  src: `https://res.cloudinary.com/dvbmnr7qn/image/upload/q_auto:low/v1728229934/hero-large_fovuxd.jpg`,
 });
 ---
 
@@ -100,7 +100,7 @@ const largeVideoPoster = getCldImageUrl({
         poster={smallVideoPoster}
       >
         <source
-          src="https://res.cloudinary.com/dvbmnr7qn/video/upload/f_webm/q_auto:low/c_crop,g_north,h_900,w_506/v1728062767/london-skyline-timelapse_lmlmhe.mp4"
+          src="https://res.cloudinary.com/dvbmnr7qn/video/upload/f_webm/q_auto:low/c_fill,g_north,h_900,w_506/v1728232312/3568724-uhd_3840_2160_30fps_sdgip4.mp4"
           type="video/webm"
         />
       </video>
@@ -114,7 +114,7 @@ const largeVideoPoster = getCldImageUrl({
         poster={mediumVideoPoster}
       >
         <source
-          src="https://res.cloudinary.com/dvbmnr7qn/video/upload/f_webm/q_auto:low/c_crop,g_north,h_1200,w_768/v1728062767/london-skyline-timelapse_lmlmhe.mp4"
+          src="https://res.cloudinary.com/dvbmnr7qn/video/upload/f_webm/q_auto:low/c_fill,g_north,h_1200,w_768/v1728232312/3568724-uhd_3840_2160_30fps_sdgip4.mp4"
           type="video/webm"
         />
       </video>
@@ -128,7 +128,7 @@ const largeVideoPoster = getCldImageUrl({
         poster={largeVideoPoster}
       >
         <source
-          src="https://res.cloudinary.com/dvbmnr7qn/video/upload/f_webm/q_auto:low/c_scale,w_1920/v1728062767/london-skyline-timelapse_lmlmhe.mp4"
+          src="https://res.cloudinary.com/dvbmnr7qn/video/upload/f_webm/q_auto:low/c_scale,w_1920/v1728232312/3568724-uhd_3840_2160_30fps_sdgip4.mp4"
           type="video/webm"
         />
       </video>
@@ -230,6 +230,7 @@ const largeVideoPoster = getCldImageUrl({
     let isScrolledBelowNavbar = false;
     let isNavbarBGColorShown = false;
     let isToggleNavbarBGActive = false;
+    const mobileNavbar = document.getElementById("mobileNavbar");
 
     function toggleNavbarClasses() {
       const navbars = document.getElementsByClassName("navbar"); // Get all navbar elements
@@ -244,7 +245,15 @@ const largeVideoPoster = getCldImageUrl({
         } else {
           // If not scrolled down
           isScrolledBelowNavbar = false;
-          if (!isToggleNavbarBGActive) {
+          if (
+            !isToggleNavbarBGActive &&
+            !mobileNavbar
+              .querySelector("#navbarSupportedContentMobile")
+              .classList.contains("show") &&
+            !mobileNavbar
+              .querySelector("#navbarSupportedContentMobile")
+              .classList.contains("collapsing")
+          ) {
             navbars[i].classList.remove("scrolled");
             navbars[i].classList.remove("shadow-lg");
             isNavbarBGColorShown = false;
@@ -255,22 +264,27 @@ const largeVideoPoster = getCldImageUrl({
 
     window.addEventListener("scroll", toggleNavbarClasses);
 
-    const navbarToggler = document.getElementById("mobile-navbar-toggler");
-    navbarToggler.addEventListener("click", function () {
-      // Check if scrolled down
+    const navbarCollapseElement = document.getElementById(
+      "navbarSupportedContentMobile"
+    );
+
+    navbarCollapseElement.addEventListener("show.bs.collapse", function () {
       if (isScrolledBelowNavbar == false) {
-        const navbar = document.getElementById("mobileNavbar"); // Get all navbar elements
-        if (!isScrolledBelowNavbar && !isNavbarBGColorShown) {
-          navbar.classList.add("scrolled");
-          navbar.classList.add("shadow-lg");
+        if (!isNavbarBGColorShown) {
           isNavbarBGColorShown = true;
           isToggleNavbarBGActive = true;
-        } else {
-          navbar.classList.remove("scrolled");
-          navbar.classList.remove("shadow-lg");
-          isNavbarBGColorShown = false;
-          isToggleNavbarBGActive = false;
+          mobileNavbar.classList.add("scrolled");
+          mobileNavbar.classList.add("shadow-lg");
         }
+      }
+    });
+
+    navbarCollapseElement.addEventListener("hide.bs.collapse", function () {
+      if (isScrolledBelowNavbar == false) {
+        isNavbarBGColorShown = false;
+        isToggleNavbarBGActive = false;
+        mobileNavbar.classList.remove("scrolled");
+        mobileNavbar.classList.remove("shadow-lg");
       }
     });
   </script>

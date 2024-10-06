@@ -42,6 +42,7 @@ const { title } = Astro.props;
     <header>
       <nav
         class="navbar navbar-expand-lg fixed-top navbar-dark container radius-50 py-3 mt-2 px-3 d-none d-lg-block"
+        id="desktopNavbar"
       >
         <div class="container">
           <a class="navbar-brand fw-bold" href="/">Video is Cool</a>
@@ -49,14 +50,17 @@ const { title } = Astro.props;
             class="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
+            data-bs-target="#navbarSupportedContentDesktop"
+            aria-controls="navbarSupportedContentDesktop"
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <div
+            class="collapse navbar-collapse"
+            id="navbarSupportedContentDesktop"
+          >
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
                 <a class="nav-link" href="#">About</a>
@@ -83,14 +87,17 @@ const { title } = Astro.props;
             class="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
+            data-bs-target="#navbarSupportedContentMobile"
+            aria-controls="navbarSupportedContentMobile"
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <div
+            class="collapse navbar-collapse"
+            id="navbarSupportedContentMobile"
+          >
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
                 <a class="nav-link" href="#">About</a>
